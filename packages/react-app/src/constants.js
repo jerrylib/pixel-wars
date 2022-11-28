@@ -221,3 +221,222 @@ export const NETWORK = chainId => {
     }
   }
 };
+
+export const LOTTERY_ABI = [
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint16",
+        name: "turn",
+        type: "uint16",
+      },
+    ],
+    name: "Participate",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "winner",
+        type: "address",
+      },
+    ],
+    name: "PickWinner",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "getPlayers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "turn",
+        type: "uint16",
+      },
+    ],
+    name: "participate",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pickWinner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "players",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+export const PIXEL_WAR_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "x",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "y",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "payable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "updater",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "x",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "y",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "color",
+        type: "string",
+      },
+    ],
+    name: "ColorUpdate",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "colors",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getMap",
+    outputs: [
+      {
+        internalType: "string[][]",
+        name: "",
+        type: "string[][]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "x",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "y",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "color",
+        type: "string",
+      },
+    ],
+    name: "update",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+];
+
+export const PIXEL_WAR_ADDRESS = "0x68b1d87f95878fe05b998f19b66f4baba5de1aed";
+export const LOTTERY_ADDRESS = "0x95401dc811bb5740090279ba06cfa8fcf6113778";

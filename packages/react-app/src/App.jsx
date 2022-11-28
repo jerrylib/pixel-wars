@@ -30,7 +30,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { getRPCPollTime, Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
+import { Home, ExampleUI, Hints, Subgraph, PixelWars, Games } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -297,7 +297,7 @@ function App(props) {
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
       <Menu style={{ textAlign: "center", marginTop: 20 }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
+        {/* <Menu.Item key="/">
           <Link to="/">App Home</Link>
         </Menu.Item>
         <Menu.Item key="/debug">
@@ -314,6 +314,12 @@ function App(props) {
         </Menu.Item>
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
+        </Menu.Item> */}
+        <Menu.Item key="/pixel-war">
+          <Link to="/pixel-war">Pixel War</Link>
+        </Menu.Item>
+        <Menu.Item key="/games">
+          <Link to="/games">Games</Link>
         </Menu.Item>
       </Menu>
 
@@ -391,12 +397,18 @@ function App(props) {
             mainnetProvider={mainnetProvider}
           />
         </Route>
+        <Route path="/pixel-war">
+          <PixelWars userProvider={injectedProvider} />
+        </Route>
+        <Route path="/games">
+          <Games userProvider={injectedProvider} />
+        </Route>
       </Switch>
 
       <ThemeSwitch />
 
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10, display: "none" }}>
         <Row align="middle" gutter={[4, 4]}>
           <Col span={8}>
             <Ramp price={price} address={address} networks={NETWORKS} />

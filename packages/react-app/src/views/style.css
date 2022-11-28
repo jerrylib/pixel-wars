@@ -1,0 +1,18 @@
+.PixelWarsContainer {
+  margin: 0 auto;
+  width: 700px;
+  height: 700px;
+  border: 1px solid gray;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: content-box;
+}
+
+.PixelWarsItem {
+  border: 1px solid gray;
+  cursor: pointer;
+}
+
+.PixelWarsItem:hover {
+  background: #ddd !important;
+}
