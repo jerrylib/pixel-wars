@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // === Utils === //
 import * as ethers from "ethers";

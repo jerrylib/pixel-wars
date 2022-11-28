@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 // === Hooks === //
 import usePixelWarContract from "./../hooks/usePixelWarContract";
