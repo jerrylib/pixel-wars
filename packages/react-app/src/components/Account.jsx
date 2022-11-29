@@ -1,10 +1,10 @@
 import { Button } from "antd";
 import React from "react";
-import { useThemeSwitcher } from "react-css-theme-switcher";
+// import { useThemeSwitcher } from "react-css-theme-switcher";
 
 import Address from "./Address";
 import Balance from "./Balance";
-import Wallet from "./Wallet";
+// import Wallet from "./Wallet";
 
 /** 
   ~ What it does? ~
@@ -54,7 +54,7 @@ export default function Account({
   blockExplorer,
   isContract,
 }) {
-  const { currentTheme } = useThemeSwitcher();
+  // const { currentTheme } = useThemeSwitcher();
 
   let accountButtonInfo;
   if (web3Modal?.cachedProvider) {
