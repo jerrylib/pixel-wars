@@ -18,7 +18,7 @@ const PixelWars = props => {
   const { x, y, data, loading, update, events } = usePixelWarContract(userProvider);
   const [color, setColor] = useState(DEFAULT_COLOR);
   console.log("x, y, data=", x, y, data);
-
+  console.log("events=", events, setColor, loading);
   const colorUpdate = (x, y) => {
     update(x, y, color);
   };
