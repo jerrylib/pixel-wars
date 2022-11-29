@@ -25,6 +25,6 @@ export default function Header({ link, title, subTitle, ...props }) {
 
 Header.defaultProps = {
   link: "",
-  title: "Pixel Wars",
+  title: "篮球与鸡",
   subTitle: "HAKUMA,NATATA",
 };

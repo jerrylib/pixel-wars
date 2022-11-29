@@ -1,41 +1,61 @@
 import React from "react";
 
 // === Component === //
-import { InputNumber, Row, Col, Button, Space, Tag } from "antd";
+import { InputNumber, Row, Col, Button, Space, List, Typography } from "antd";
 import { useState } from "react";
 
 // === Hooks === //
 import useLotteryContract from "./../hooks/useLotteryContract";
 
+// === Utils === //
+import groupBy from "lodash/groupBy";
+import sortBy from "lodash/sortBy";
+import first from "lodash/first";
+import values from "lodash/values";
+
 const Games = props => {
-  const { userProvider } = props;
-  const [value, setValue] = useState(0);
+  const { address, userProvider } = props;
+  const [value, setValue] = useState(1);
   const { tvl, players, pickWinner, participate } = useLotteryContract(userProvider);
 
   const deposit = () => {
-    participate(value);
+    if (value > 0) {
+      participate(value);
+    }
   };
 
+  const sortData = sortBy(values(groupBy(players)), item => -1 * item.length);
+
   return (
-    <Row gutter={[24, 24]}>
-      <Col span={24}>
-        {players.map((item, index) => (
-          <Tag key={index}>{item}</Tag>
-        ))}
-        <Button type="primary" onClick={pickWinner}>
-          Pick Winner
-        </Button>
+    <Row style={{ padding: "1rem" }}>
+      <Col span={12}>
+        <List
+          header={<div>下注详情（Tvl：{tvl.toString()} ETH）</div>}
+          footer={
+            <Button type="primary" onClick={pickWinner}>
+              Pick Winner
+            </Button>
+          }
+          bordered
+          dataSource={sortData}
+          renderItem={(item, index) => (
+            <List.Item key={index}>
+              <Typography.Text mark={address === first(item)}>
+                [{((100 * item.length) / players.length).toFixed(2)}%]
+              </Typography.Text>{" "}
+              {first(item)}
+            </List.Item>
+          )}
+        />
       </Col>
-      <Col span={24}>
-        <span>Tvl：{tvl.toString()} ETH</span>
-      </Col>
-      <Col span={24}>
+      <Col span={12}>
         <Space>
-          <InputNumber step={1} value={value} onChange={setValue} />
+          <InputNumber step={1} value={value} onChange={setValue} addonAfter="倍数" />
           <Button type="primary" onClick={deposit}>
-            Deposit
+            下注
           </Button>
         </Space>
+        <p>1 ETH 起下注，25 倍即投入 25 个 ETH</p>
       </Col>
     </Row>
   );

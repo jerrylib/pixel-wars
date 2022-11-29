@@ -6,11 +6,15 @@
   display: flex;
   flex-wrap: wrap;
   box-sizing: content-box;
+  border-top: 0;
+  border-right: 0;
 }
 
 .PixelWarsItem {
   border: 1px solid gray;
   cursor: pointer;
+  border-left: 0;
+  border-bottom: 0;
 }
 
 .PixelWarsItem:hover {
