@@ -12,6 +12,7 @@ import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 import first from "lodash/first";
 import values from "lodash/values";
+import * as ethers from "ethers";
 
 const Games = props => {
   const { address, userProvider } = props;
@@ -27,10 +28,10 @@ const Games = props => {
   const sortData = sortBy(values(groupBy(players)), item => -1 * item.length);
 
   return (
-    <Row style={{ padding: "1rem" }}>
+    <Row style={{ padding: "1rem" }} align="middle" justify="center">
       <Col span={12}>
         <List
-          header={<div>下注详情（Tvl：{tvl.toString()} ETH）</div>}
+          header={<div>下注详情（Tvl：{ethers.utils.formatUnits(tvl, 18)} ETH）</div>}
           footer={
             <Button type="primary" onClick={pickWinner}>
               Pick Winner
@@ -48,7 +49,7 @@ const Games = props => {
           )}
         />
       </Col>
-      <Col span={12}>
+      <Col span={12} style={{ textAlign: "center" }}>
         <Space>
           <InputNumber step={1} value={value} onChange={setValue} addonAfter="倍数" />
           <Button type="primary" onClick={deposit}>

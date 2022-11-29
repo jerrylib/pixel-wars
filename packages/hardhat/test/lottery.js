@@ -1,6 +1,8 @@
 const { ethers } = require("hardhat");
 const { expect } = require("chai");
 
+const { BigNumber } = ethers;
+
 describe("My Dapp", function () {
   let myContract;
 
@@ -13,10 +15,12 @@ describe("My Dapp", function () {
 
     describe("participate()", function () {
       it("Should be participate ", async function () {
-        const turn = 20;
-        await myContract.participate(turn, { value: turn });
+        const turn = 2;
+        await myContract.participate(turn, {
+          value: BigNumber.from(10).pow(18).mul(turn),
+        });
         const players = await myContract.getPlayers();
-        expect(players.length).to.equal(20);
+        expect(players.length).to.equal(turn);
       });
     });
     describe("pickWinner()", function () {

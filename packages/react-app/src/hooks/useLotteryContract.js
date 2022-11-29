@@ -38,7 +38,9 @@ const useLotteryContract = userProvider => {
       const contracts = contract();
       if (isEmpty(contracts)) return;
       const signer = userProvider.getSigner();
-      contracts.connect(signer).participate(turn, { value: turn });
+      contracts.connect(signer).participate(turn, {
+        value: ethers.BigNumber.from(10).pow(18).mul(turn),
+      });
     },
     [contract, userProvider],
   );

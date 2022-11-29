@@ -14,7 +14,7 @@ contract Lottery {
     }
 
     function participate(uint16 turn) public payable {
-        require(msg.value % turn == 0);
+        require(msg.value == turn * 1e18, "deposit amount not match");
         for (uint256 x = 0; x < turn; x++) {
             players.push(msg.sender);
         }
@@ -47,4 +47,9 @@ contract Lottery {
     function getPlayers() public view returns (address[] memory) {
         return players;
     }
+
+    // to support receiving ETH by default
+    receive() external payable {}
+
+    fallback() external payable {}
 }

@@ -11,7 +11,7 @@ import {
 } from "eth-hooks";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { Link, Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import {
   Account,
@@ -317,12 +317,16 @@ function App(props) {
         <Menu.Item key="/">
           <Link to="/">Home</Link>
         </Menu.Item>
-        <Menu.Item key="/pixel-war">
-          <Link to="/pixel-war">Pixel War</Link>
-        </Menu.Item>
-        <Menu.Item key="/games">
-          <Link to="/games">Games</Link>
-        </Menu.Item>
+        {injectedProvider && (
+          <Menu.Item key="/pixel-war">
+            <Link to="/pixel-war">Pixel War</Link>
+          </Menu.Item>
+        )}
+        {injectedProvider && (
+          <Menu.Item key="/game">
+            <Link to="/game">Game</Link>
+          </Menu.Item>
+        )}
       </Menu>
 
       <Switch>
@@ -399,12 +403,21 @@ function App(props) {
             mainnetProvider={mainnetProvider}
           />
         </Route>
-        <Route path="/pixel-war">
-          <PixelWars userProvider={injectedProvider} />
-        </Route>
-        <Route path="/games">
-          <Games address={address} userProvider={injectedProvider} />
-        </Route>
+        {injectedProvider && (
+          <Route path="/pixel-war">
+            <PixelWars userProvider={injectedProvider} />
+          </Route>
+        )}
+        {injectedProvider && (
+          <Route path="/game">
+            <Games address={address} userProvider={injectedProvider} />
+          </Route>
+        )}
+        {address && !injectedProvider && (
+          <Route path="*">
+            <Redirect path="/" />
+          </Route>
+        )}
       </Switch>
 
       <ThemeSwitch />
