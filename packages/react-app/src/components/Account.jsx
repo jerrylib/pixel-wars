@@ -1,10 +1,10 @@
 import { Button } from "antd";
 import React from "react";
-import { useThemeSwitcher } from "react-css-theme-switcher";
+// import { useThemeSwitcher } from "react-css-theme-switcher";
 
 import Address from "./Address";
 import Balance from "./Balance";
-import Wallet from "./Wallet";
+// import Wallet from "./Wallet";
 
 /** 
   ~ What it does? ~
@@ -54,7 +54,7 @@ export default function Account({
   blockExplorer,
   isContract,
 }) {
-  const { currentTheme } = useThemeSwitcher();
+  // const { currentTheme } = useThemeSwitcher();
 
   let accountButtonInfo;
   if (web3Modal?.cachedProvider) {
@@ -68,8 +68,8 @@ export default function Account({
       {address && (
         <Address address={address} ensProvider={mainnetProvider} blockExplorer={blockExplorer} fontSize={20} />
       )}
-      <Balance address={address} provider={localProvider} price={price} size={20} />
-      {!isContract && (
+      <Balance address={address} provider={localProvider} price={1} size={20} />
+      {/* {!isContract && (
         <Wallet
           address={address}
           provider={localProvider}
@@ -80,7 +80,7 @@ export default function Account({
           size={22}
           padding={"0px"}
         />
-      )}
+      )} */}
     </span>
   );
 

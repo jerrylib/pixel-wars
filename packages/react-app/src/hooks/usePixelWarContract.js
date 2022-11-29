@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 
 // === Utils === //
 import * as ethers from "ethers";
-import first from "lodash/first";
+import moment from "moment";
 import isEmpty from "lodash/isEmpty";
+import map from "lodash/map";
 
 // === Constants === //
-import { PIXEL_WAR_ADDRESS, PIXEL_WAR_ABI } from "./../constants";
+import { PIXEL_WAR_ADDRESS, PIXEL_WAR_ABI, DEFAULT_COLOR } from "./../constants";
 
 const { Contract } = ethers;
 
@@ -25,12 +26,21 @@ const usePixelWarContract = userProvider => {
   const loadMap = useCallback(async () => {
     const contracts = contract();
     if (isEmpty(contracts) || isEmpty(userProvider)) return;
-    contracts
-      .getMap()
-      .then(v => {
-        setX(first(v).length);
-        setY(v.length);
-        setData(v);
+
+    Promise.all([contracts.maxX(), contracts.maxY()])
+      .then(([maxX, maxY]) => {
+        const nextMaxX = 10;
+        const nextMaxY = 10;
+        setX(nextMaxX);
+        setY(nextMaxY);
+        const promiseArray = [];
+        for (let index = 0; index < nextMaxX; index++) {
+          for (let innerIndex = 0; innerIndex < nextMaxY; innerIndex++) {
+            promiseArray.push(contracts.getColor(index, innerIndex).catch(() => DEFAULT_COLOR));
+          }
+        }
+
+        setData(promiseArray);
       })
       .finally(() => {
         setTimeout(() => {
@@ -50,23 +60,30 @@ const usePixelWarContract = userProvider => {
   );
 
   const addEventListener = useCallback(
-    (address, x, y, color) => {
-      console.log("ColorUpdate=", address, x, y, color);
-      const nextData = data.map((item, outerIndex) => {
-        return item.map((i, innerIndex) => {
-          if (x.eq(outerIndex) && y.eq(innerIndex)) return color;
-          return data[outerIndex][innerIndex];
-        });
+    (address, currentX, currentY, color, transation) => {
+      const currentXValue = currentX.toNumber();
+      const currentYValue = currentY.toNumber();
+      const nextData = map(data, (item, index) => {
+        if (currentXValue * y + currentYValue === index) return Promise.resolve(color);
+
+        return item;
       });
       setData(nextData);
-      setEvents({
-        address,
-        x,
-        y,
-        color,
+      transation.getBlock().then(({ timestamp }) => {
+        const time = moment(1000 * timestamp);
+        setEvents([
+          {
+            time: time.format("yyyy-MM-DD HH:mm:ss"),
+            address,
+            x: currentXValue,
+            y: currentYValue,
+            color,
+          },
+          ...events,
+        ]);
       });
     },
-    [data],
+    [events, data, y],
   );
 
   useEffect(loadMap, [loadMap]);

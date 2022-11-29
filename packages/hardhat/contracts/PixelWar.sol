@@ -9,8 +9,8 @@ import "hardhat/console.sol";
 contract PixelWar {
     mapping(string => string) public colors; // 1-5 => #ddd
 
-    uint256 private maxX;
-    uint256 private maxY;
+    uint256 public maxX;
+    uint256 public maxY;
 
     event ColorUpdate(address updater, uint256 x, uint256 y, string color);
 
@@ -38,23 +38,16 @@ contract PixelWar {
         emit ColorUpdate(msg.sender, x, y, color);
     }
 
-    function getMap() public view returns (string[][] memory) {
-        string[][] memory rows = new string[][](maxY);
-        for (uint256 x = 0; x < maxX; x++) {
-            string[] memory cols = new string[](maxX);
-            for (uint256 y = 0; y < maxY; y++) {
-                cols[y] = (
-                    colors[
-                        strConcat(
-                            strConcat(Strings.toString(x), "-"),
-                            Strings.toString(y)
-                        )
-                    ]
-                );
-            }
-            rows[x] = (cols);
-        }
-        return rows;
+    function getColor(uint256 x, uint256 y)
+        public
+        view
+        returns (string memory result)
+    {
+        string memory findKey = strConcat(
+            strConcat(Strings.toString(x), "-"),
+            Strings.toString(y)
+        );
+        result = colors[findKey];
     }
 
     function strConcat(string memory _a, string memory _b)

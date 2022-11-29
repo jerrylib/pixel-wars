@@ -8,7 +8,7 @@ describe("My Dapp", function () {
     it("Should deploy PixelWar", async function () {
       const PixelWarContract = await ethers.getContractFactory("PixelWar");
 
-      myContract = await PixelWarContract.deploy(100, 100);
+      myContract = await PixelWarContract.deploy(10000, 10000);
     });
 
     describe("update()", function () {
@@ -18,8 +18,8 @@ describe("My Dapp", function () {
     });
     describe("getMap()", function () {
       it("getMap() return new Array", async function () {
-        const map = await myContract.getMap();
-        expect(map[1][2]).to.equal("#ddd");
+        const result = await myContract.getColor(1, 2);
+        expect(result).to.equal("#ddd");
       });
     });
   });

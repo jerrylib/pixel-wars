@@ -401,13 +401,50 @@ export const PIXEL_WAR_ABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "getMap",
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "x",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "y",
+        type: "uint256",
+      },
+    ],
+    name: "getColor",
     outputs: [
       {
-        internalType: "string[][]",
+        internalType: "string",
+        name: "result",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxX",
+    outputs: [
+      {
+        internalType: "uint256",
         name: "",
-        type: "string[][]",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxY",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -438,5 +475,7 @@ export const PIXEL_WAR_ABI = [
   },
 ];
 
-export const PIXEL_WAR_ADDRESS = "0x68b1d87f95878fe05b998f19b66f4baba5de1aed";
-export const LOTTERY_ADDRESS = "0x95401dc811bb5740090279ba06cfa8fcf6113778";
+export const PIXEL_WAR_ADDRESS = "0xa85233c63b9ee964add6f2cffe00fd84eb32338f";
+export const LOTTERY_ADDRESS = "0x1613beb3b2c4f22ee086b2b38c1476a3ce7f78e8";
+
+export const DEFAULT_COLOR = "#ffffff";
