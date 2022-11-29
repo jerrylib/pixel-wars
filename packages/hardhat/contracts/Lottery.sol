@@ -33,7 +33,7 @@ contract Lottery {
     function pickWinner() public {
         uint256 balance = address(this).balance;
         require(players.length > 0, "must 1 person deposited");
-        require(balance >= 1, "must deposited over 1 ethers");
+        require(balance >= 5 ether, "must deposited over 5 ethers");
 
         uint256 index = random() % players.length;
         payable(owner).transfer(balance / 100);

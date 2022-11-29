@@ -6,6 +6,7 @@ import isEmpty from "lodash/isEmpty";
 
 // === Constants === //
 import { LOTTERY_ADDRESS, LOTTERY_ABI } from "../constants";
+import { message } from "antd";
 
 const { Contract } = ethers;
 
@@ -24,6 +25,7 @@ const useLotteryContract = userProvider => {
     if (isEmpty(contracts) || isEmpty(userProvider)) return;
     contracts
       .getPlayers()
+      .catch(error => message.error(error?.data?.message))
       .then(setPlayers)
       .finally(() => {
         setTimeout(() => {
@@ -38,9 +40,12 @@ const useLotteryContract = userProvider => {
       const contracts = contract();
       if (isEmpty(contracts)) return;
       const signer = userProvider.getSigner();
-      contracts.connect(signer).participate(turn, {
-        value: ethers.BigNumber.from(10).pow(18).mul(turn),
-      });
+      contracts
+        .connect(signer)
+        .participate(turn, {
+          value: ethers.BigNumber.from(10).pow(18).mul(turn),
+        })
+        .catch(error => message.error(error?.data?.message));
     },
     [contract, userProvider],
   );
@@ -49,7 +54,10 @@ const useLotteryContract = userProvider => {
     const contracts = contract();
     if (isEmpty(contracts)) return;
     const signer = userProvider.getSigner();
-    contracts.connect(signer).pickWinner();
+    contracts
+      .connect(signer)
+      .pickWinner()
+      .catch(error => message.error(error?.data?.message));
   }, [contract, userProvider]);
 
   useEffect(load, [load]);
