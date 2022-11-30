@@ -9,6 +9,7 @@ import usePixelWarContract from "./../hooks/usePixelWarContract";
 
 // === Utils === //
 import map from "lodash/map";
+import isUndefined from "lodash/isUndefined";
 
 // === Contants === //
 import { DEFAULT_COLOR } from "./../constants";
@@ -17,14 +18,9 @@ import { DEFAULT_COLOR } from "./../constants";
 import "./style.css";
 
 const Block = props => {
-  const { x, y, style, promise } = props;
+  const { x, y, style, colors, handleMouseEnter } = props;
   const dataId = `${x}-${y}`;
-  const [color, setColor] = useState(DEFAULT_COLOR);
-
-  useEffect(() => {
-    Promise.resolve(promise).then(setColor);
-  }, [promise]);
-
+  const color = colors[dataId];
   return (
     <div
       id={dataId}
@@ -33,14 +29,15 @@ const Block = props => {
         ...style,
         background: color,
       }}
-      className={"PixelWarsItem"}
+      onMouseEnter={() => handleMouseEnter(x, y)}
+      className={isUndefined(color) ? "PixelWarsItemNotFetch" : "PixelWarsItem"}
     />
   );
 };
 
 const PixelWars = props => {
   const { address, userProvider } = props;
-  const { x, y, data, loading, update, events } = usePixelWarContract(userProvider);
+  const { x, y, loading, update, events, colors, loadColor } = usePixelWarContract(userProvider);
   const [color, setColor] = useState(localStorage.getItem("color") || DEFAULT_COLOR);
 
   const colorUpdate = event => {
@@ -52,7 +49,6 @@ const PixelWars = props => {
   const heightEvery = `${100 / x}%`;
   const widthEvery = `${100 / y}%`;
 
-  console.log("loading=", loading);
   return (
     <Row gutter={[24, 24]} style={{ padding: "1rem" }}>
       <Col span={18}>
@@ -65,7 +61,8 @@ const PixelWars = props => {
                     <Block
                       x={index}
                       y={innerIndex}
-                      promise={data[index * y + innerIndex]}
+                      colors={colors}
+                      handleMouseEnter={loadColor}
                       style={{ height: heightEvery, width: widthEvery }}
                     />
                   );
