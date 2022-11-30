@@ -15,7 +15,7 @@ describe("My Dapp", function () {
 
     describe("participate()", function () {
       it("Should be participate ", async function () {
-        const turn = 2;
+        const turn = 5;
         await myContract.participate(turn, {
           value: BigNumber.from(10).pow(18).mul(turn),
         });

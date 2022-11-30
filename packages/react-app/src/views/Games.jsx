@@ -56,7 +56,7 @@ const Games = props => {
             下注
           </Button>
         </Space>
-        <p>1 ETH 起下注，25 倍即投入 25 个 ETH</p>
+        <p>0.01 ETH 起下注，25 倍即投入 0.25 个 ETH</p>
       </Col>
     </Row>
   );

@@ -29,8 +29,8 @@ const usePixelWarContract = userProvider => {
 
     Promise.all([contracts.maxX(), contracts.maxY()])
       .then(([maxX, maxY]) => {
-        const nextMaxX = 10;
-        const nextMaxY = 10;
+        const nextMaxX = maxX.toNumber();
+        const nextMaxY = maxY.toNumber();
         setX(nextMaxX);
         setY(nextMaxY);
         const promiseArray = [];

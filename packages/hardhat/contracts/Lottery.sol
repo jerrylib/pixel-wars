@@ -14,7 +14,7 @@ contract Lottery {
     }
 
     function participate(uint16 turn) public payable {
-        require(msg.value == turn * 1e18, "deposit amount not match");
+        require(msg.value == turn * 1e16, "deposit amount not match");
         for (uint256 x = 0; x < turn; x++) {
             players.push(msg.sender);
         }
@@ -33,7 +33,7 @@ contract Lottery {
     function pickWinner() public {
         uint256 balance = address(this).balance;
         require(players.length > 0, "must 1 person deposited");
-        require(balance >= 1, "must deposited over 1 ethers");
+        require(balance >= 0.05 ether, "must deposited over 0.05 ethers");
 
         uint256 index = random() % players.length;
         payable(owner).transfer(balance / 100);

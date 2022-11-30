@@ -8,7 +8,7 @@ describe("My Dapp", function () {
     it("Should deploy PixelWar", async function () {
       const PixelWarContract = await ethers.getContractFactory("PixelWar");
 
-      myContract = await PixelWarContract.deploy(10000, 10000);
+      myContract = await PixelWarContract.deploy(100, 100);
     });
 
     describe("update()", function () {

@@ -14,10 +14,15 @@ function Home() {
     <Row style={{ padding: "1rem" }}>
       <Col span={24}>
         <h1>游戏玩法介绍</h1>
+        <p>巴拉巴拉。。。</p>
         <h2>安装metamask</h2>
+        <p>巴拉巴拉。。。</p>
         <h2>获得ETH币</h2>
+        <p>巴拉巴拉。。。</p>
         <h2>Pixel War</h2>
+        <p>巴拉巴拉。。。</p>
         <h2>Game</h2>
+        <p>巴拉巴拉。。。</p>
       </Col>
     </Row>
   );
