@@ -27,6 +27,7 @@ const usePixelWarContract = userProvider => {
     const contracts = contract();
     if (isEmpty(contracts) || isEmpty(userProvider)) return;
 
+    setLoading(true);
     Promise.all([contracts.maxX(), contracts.maxY()])
       .then(([maxX, maxY]) => {
         const nextMaxX = maxX.toNumber();

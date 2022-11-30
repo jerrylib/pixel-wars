@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // === Components === //
 import { SketchPicker } from "react-color";
-import { Popover, Row, Col, List, Typography } from "antd";
+import { Popover, Row, Col, List, Typography, Spin } from "antd";
 
 // === Hooks === //
 import usePixelWarContract from "./../hooks/usePixelWarContract";
@@ -15,7 +15,6 @@ import { DEFAULT_COLOR } from "./../constants";
 
 // === Styles === //
 import "./style.css";
-import { useState } from "react";
 
 const Block = props => {
   const { x, y, style, promise } = props;
@@ -55,65 +54,67 @@ const PixelWars = props => {
 
   console.log("loading=", loading);
   return (
-    <React.Fragment>
-      <Row gutter={[24, 24]} style={{ padding: "1rem" }}>
-        <Col span={18}>
-          <div className={"PixelWarsContainer"} onClick={colorUpdate}>
-            {map(new Array(x), (item, index) => {
-              return map(new Array(y), (innerItem, innerIndex) => {
-                return (
-                  <Block
-                    x={index}
-                    y={innerIndex}
-                    promise={data[index * y + innerIndex]}
-                    style={{ height: heightEvery, width: widthEvery }}
-                  />
-                );
-              });
-            })}
-          </div>
-        </Col>
-        <Col span={6}>
-          <p>
-            选择&nbsp;&nbsp;
-            <Popover
-              content={
-                <SketchPicker
-                  styles={{ wrap: { margin: "0 auto" } }}
-                  color={color}
-                  onChangeComplete={v => {
-                    setColor(v.hex);
-                    localStorage.setItem("color", v.hex);
-                  }}
-                />
-              }
-              title="Color Picker"
-            >
-              <span
-                style={{
-                  background: color,
-                  border: `1px solid ${color === DEFAULT_COLOR ? "#ddd" : color}`,
-                  padding: "0 1rem",
-                  cursor: "pointer",
+    <Row gutter={[24, 24]} style={{ padding: "1rem" }}>
+      <Col span={18}>
+        <Spin spinning={loading}>
+          {!loading && (
+            <div className={"PixelWarsContainer"} onClick={colorUpdate}>
+              {map(new Array(x), (item, index) => {
+                return map(new Array(y), (innerItem, innerIndex) => {
+                  return (
+                    <Block
+                      x={index}
+                      y={innerIndex}
+                      promise={data[index * y + innerIndex]}
+                      style={{ height: heightEvery, width: widthEvery }}
+                    />
+                  );
+                });
+              })}
+            </div>
+          )}
+        </Spin>
+      </Col>
+      <Col span={6}>
+        <p>
+          选择&nbsp;&nbsp;
+          <Popover
+            content={
+              <SketchPicker
+                styles={{ wrap: { margin: "0 auto" } }}
+                color={color}
+                onChangeComplete={v => {
+                  setColor(v.hex);
+                  localStorage.setItem("color", v.hex);
                 }}
-              ></span>
-            </Popover>
-            &nbsp;&nbsp; 颜色填充在上面的区域中
-          </p>
-          <List
-            header={<div>修改记录</div>}
-            bordered
-            dataSource={events}
-            renderItem={(item, index) => (
-              <List.Item title={item.address} key={index}>
-                <Typography.Text mark={address === item.address}>[{item.time}]</Typography.Text> x:{1 + item.x} y:
-                {1 + item.y} <span style={{ background: item.color, padding: "0 0.6rem", marginLeft: "0.5rem" }}></span>
-              </List.Item>
-            )}
-          />
-        </Col>
-      </Row>
-    </React.Fragment>
+              />
+            }
+            title="Color Picker"
+          >
+            <span
+              style={{
+                background: color,
+                border: `1px solid ${color === DEFAULT_COLOR ? "#ddd" : color}`,
+                padding: "0 1rem",
+                cursor: "pointer",
+              }}
+            ></span>
+          </Popover>
+          &nbsp;&nbsp; 颜色填充在上面的区域中
+        </p>
+        <List
+          header={<div>修改记录</div>}
+          bordered
+          dataSource={events}
+          renderItem={(item, index) => (
+            <List.Item title={item.address} key={index}>
+              <Typography.Text mark={address === item.address}>[{item.time}]</Typography.Text> x:{1 + item.x} y:
+              {1 + item.y} <span style={{ background: item.color, padding: "0 0.6rem", marginLeft: "0.5rem" }}></span>
+            </List.Item>
+          )}
+        />
+      </Col>
+    </Row>
   );
 };
 
