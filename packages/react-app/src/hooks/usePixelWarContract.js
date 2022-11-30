@@ -5,7 +5,6 @@ import * as ethers from "ethers";
 import moment from "moment";
 import map from "lodash/map";
 import isEmpty from "lodash/isEmpty";
-import flattenDeep from "lodash/flattenDeep";
 import isUndefined from "lodash/isUndefined";
 import reduce from "lodash/reduce";
 
