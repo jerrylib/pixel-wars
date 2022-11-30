@@ -475,7 +475,7 @@ export const PIXEL_WAR_ABI = [
   },
 ];
 
-export const PIXEL_WAR_ADDRESS = "0xa85233c63b9ee964add6f2cffe00fd84eb32338f";
-export const LOTTERY_ADDRESS = "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90";
+export const PIXEL_WAR_ADDRESS = "0xFA7245235ee0a9d265a7C58838D46e65006BdEa3";
+export const LOTTERY_ADDRESS = "0x1E6724660587C7621a204a91270E8FB24ea9c92d";
 
 export const DEFAULT_COLOR = "#ffffff";

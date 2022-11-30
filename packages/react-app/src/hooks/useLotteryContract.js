@@ -43,7 +43,7 @@ const useLotteryContract = userProvider => {
       contracts
         .connect(signer)
         .participate(turn, {
-          value: ethers.BigNumber.from(10).pow(18).mul(turn),
+          value: ethers.BigNumber.from(10).pow(16).mul(turn),
         })
         .catch(error => message.error(error?.data?.message));
     },
