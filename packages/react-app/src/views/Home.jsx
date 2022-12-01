@@ -24,7 +24,7 @@ function Home() {
   return (
     <Row style={{ padding: "1rem" }}>
       <Col span={24}>
-        <h1>游戏玩法介绍</h1>
+        <h1>游戏玩法介绍1</h1>
         <p>区块链小游戏</p>
         <h2>1. 安装metamask</h2>
         <p>访问 https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US</p>
