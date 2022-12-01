@@ -7,6 +7,7 @@ import map from "lodash/map";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import reduce from "lodash/reduce";
+import debounce from "lodash/debounce";
 
 // === Constants === //
 import { PIXEL_WAR_ADDRESS, PIXEL_WAR_ABI } from "./../constants";
@@ -44,16 +45,40 @@ const usePixelWarContract = userProvider => {
       });
   }, [contract, userProvider]);
 
+  // eslint-disable-next-line
   const loadColor = useCallback(
-    (currentX, currentY) => {
+    debounce((currentX, currentY) => {
       const contracts = contract();
       if (isEmpty(contracts) || isEmpty(userProvider)) return;
-      contracts.getColor(currentX, currentY).then(color => {
-        const nextColors = { ...colors, [`${currentX}-${currentY}`]: color };
+      const promiseArray = [];
+      [currentX - 1, currentX, currentX + 1].forEach(element => {
+        [currentY - 1, currentY, currentY + 1].forEach(innerElement => {
+          const key = `${element}-${innerElement}`;
+          if (element < 0 || innerElement < 0 || element >= x || innerElement >= y || !isUndefined(colors[key])) return;
+          promiseArray.push(
+            contracts.getColor(element, innerElement).then(color => {
+              return {
+                [key]: color,
+              };
+            }),
+          );
+        });
+      });
+      Promise.allSettled(promiseArray).then(res => {
+        const nextColors = reduce(
+          map(res, "value"),
+          (rs, item) => {
+            return {
+              ...rs,
+              ...item,
+            };
+          },
+          colors,
+        );
         setColors(nextColors);
       });
-    },
-    [contract, userProvider, colors],
+    }, 500),
+    [contract, userProvider, colors, x, y],
   );
 
   const update = useCallback(

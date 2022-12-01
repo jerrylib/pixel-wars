@@ -18,19 +18,16 @@ import { DEFAULT_COLOR } from "./../constants";
 import "./style.css";
 
 const Block = props => {
-  const { x, y, style, colors, handleMouseEnter } = props;
-  const dataId = `${x}-${y}`;
-  const color = colors[dataId];
+  const { color, handleMouseEnter, height, width } = props;
   return (
     <div
-      id={dataId}
-      key={dataId}
+      className={isUndefined(color) ? "PixelWarsItemNotFetch" : "PixelWarsItem"}
       style={{
-        ...style,
+        height,
+        width,
         background: color,
       }}
-      onMouseEnter={() => handleMouseEnter(x, y)}
-      className={isUndefined(color) ? "PixelWarsItemNotFetch" : "PixelWarsItem"}
+      onMouseEnter={handleMouseEnter}
     />
   );
 };
@@ -57,13 +54,16 @@ const PixelWars = props => {
             <div className={"PixelWarsContainer"} onClick={colorUpdate}>
               {map(new Array(x), (item, index) => {
                 return map(new Array(y), (innerItem, innerIndex) => {
+                  const dataId = `${index}-${innerIndex}`;
+                  const color = colors[dataId];
+                  const key = `${dataId}-${color}`;
                   return (
                     <Block
-                      x={index}
-                      y={innerIndex}
-                      colors={colors}
-                      handleMouseEnter={loadColor}
-                      style={{ height: heightEvery, width: widthEvery }}
+                      key={key}
+                      color={color}
+                      handleMouseEnter={() => loadColor(index, innerIndex)}
+                      height={heightEvery}
+                      width={widthEvery}
                     />
                   );
                 });
