@@ -1,11 +1,11 @@
-name: Release gh-pages
+name: Release qa-sg
 on:
   push:
     branches:
-      - master
+      - qa-sg
   pull_request:
     branches:
-      - master
+      - qa-sg
 jobs:
   deploy-web:
     name: Deploy Web Site
@@ -30,5 +30,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
+          BRANCH: qa-sg
           FOLDER: packages/react-app/build
